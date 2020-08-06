@@ -1,16 +1,31 @@
 package tms;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
- @RestController
+@RestController
  public class OrderController {
 
+ @Autowired
+ OrderRepository orderRepository;
+
+ @RequestMapping(method=RequestMethod.PATCH, path="/orders/cancel")
+ public void orderCancel(@RequestParam(value="id", required=false, defaultValue="0") String id) {
+
+  Optional<Order> orders = orderRepository.findById(Long.valueOf(id));
+  System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+  orders.get().setId(Long.valueOf(id));
+  orders.get().setDescription("CANCELORDERED");
+  orderRepository.delete(orders.get());
 
  }
+
+
+
+
+}

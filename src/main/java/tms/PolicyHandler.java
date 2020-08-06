@@ -40,7 +40,7 @@ System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ORDERORDERORDERORDE
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrderCanceled_orderCancelNotify(@Payload OrderCanceled orderCanceled){
-
+        System.out.println("ppppppppppppppppppppppppppppppppppppppp" );
         if(orderCanceled.isMe() && orderCanceled.getId()!=null){
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             Optional<Order> orders = orderRepository.findById(orderCanceled.getId());
@@ -55,7 +55,22 @@ System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ORDERORDERORDERORDE
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverOrderCancelAccepted_OrderCancelAccept(@Payload OrderCanceled orderCanceled){
+        System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz" );
+        if(orderCanceled.isMe() && orderCanceled.getId()!=null){
 
+            System.out.println("77777777777777777777777777777777777777777777" );
+
+            Optional<Order> orders = orderRepository.findById(orderCanceled.getId());
+            orders.get().setId(orderCanceled.getId());
+            orders.get().setDescription("ORDERCANCELED");
+            orderRepository.save(orders.get());
+
+
+            System.out.println("##### listener OrderCancelAccept status : " + orderCanceled.toJson());
+        }
+    }
 
 
 
