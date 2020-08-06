@@ -40,7 +40,7 @@ System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ORDERORDERORDERORDE
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverOrderCanceled_orderCancelNotify(@Payload OrderCanceled orderCanceled){
-        System.out.println("ppppppppppppppppppppppppppppppppppppppp" );
+        System.out.println("99999999999999999999999999999999999999999999" );
         if(orderCanceled.isMe() && orderCanceled.getId()!=null){
             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             Optional<Order> orders = orderRepository.findById(orderCanceled.getId());
